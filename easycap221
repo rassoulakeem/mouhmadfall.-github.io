@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Easy Cap 221 — Premium Caps Dakar</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:        #C9A84C;
+      --gold-dark:   #A8862A;
+      --gold-light:  #E8C962;
+      --gold-dim:    rgba(201,168,76,0.12);
+      --black:       #080808;
+      --dark-1:      #0F0F0F;
+      --dark-2:      #161616;
+      --dark-3:      #1F1F1F;
+      --dark-4:      #2A2A2A;
+      --dark-5:      #383838;
+      --white:       #FFFFFF;
+      --cream:       #F5F0E8;
+      --text-hi:     #FFFFFF;
+      --text-mid:    #A0A0A0;
+      --text-lo:     #555555;
+      --border:      #2A2A2A;
+      --border-gold: rgba(201,168,76,0.35);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html,body { height:100%; scroll-behavior:smooth; }
+    body { font-family:'Barlow',sans-serif; background:var(--black); color:var(--text-hi); overflow-x:hidden; }
+    ::-webkit-scrollbar { width:4px; }
+    ::-webkit-scrollbar-track { background:var(--dark-1); }
+    ::-webkit-scrollbar-thumb { background:var(--gold); border-radius:2px; }
+    body::before {
+      content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity:0.35;
+    }
+    .gold { color:var(--gold); }
+    .gold-bg { background:var(--gold); }
+    .display { font-family:'Bebas Neue',sans-serif; letter-spacing:0.03em; }
+    .condensed { font-family:'Barlow Condensed',sans-serif; }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes popIn    { from{transform:scale(0) rotate(-15deg);opacity:0} to{transform:scale(1) rotate(0);opacity:1} }
+    @keyframes toastIn  { from{transform:translateY(120%);opacity:0} to{transform:translateY(0);opacity:1} }
+    @keyframes toastOut { from{opacity:1} to{opacity:0;transform:translateY(20px)} }
+    @keyframes marquee  { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    @keyframes spin     { to{transform:rotate(360deg)} }
+    @keyframes shimmer  { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+    @keyframes glowPulse{ 0%,100%{box-shadow:0 0 20px rgba(201,168,76,0.3)} 50%{box-shadow:0 0 40px rgba(201,168,76,0.6)} }
+    .afu { animation:fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .d1  { animation-delay:0.1s; opacity:0; }
+    .d2  { animation-delay:0.25s; opacity:0; }
+    .d3  { animation-delay:0.4s; opacity:0; }
+    .d4  { animation-delay:0.55s; opacity:0; }
+    .d5  { animation-delay:0.7s; opacity:0; }
+    .marquee-track { display:flex; animation:marquee 30s linear infinite; white-space:nowrap; }
+    #navbar { background:transparent; transition:background 0.4s,backdrop-filter 0.4s,border-color 0.4s; border-bottom:1px solid transparent; }
+    #navbar.scrolled { background:rgba(8,8,8,0.92); backdrop-filter:blur(20px); border-bottom-color:var(--border); }
+    .nav-link { position:relative; color:var(--text-mid); transition:color 0.2s; }
+    .nav-link::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s; }
+    .nav-link:hover { color:var(--white); }
+    .nav-link:hover::after { width:100%; }
+    .btn-gold { background:linear-gradient(135deg,var(--gold-light) 0%,var(--gold) 50%,var(--gold-dark) 100%); color:var(--black); font-family:'Barlow Condensed',sans-serif; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; transition:all 0.3s ease; position:relative; overflow:hidden; }
+    .btn-gold::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,0.3),transparent); opacity:0; transition:opacity 0.3s; }
+    .btn-gold:hover::before { opacity:1; }
+    .btn-gold:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(201,168,76,0.4); }
+    .btn-outline { border:1.5px solid var(--gold); color:var(--gold); font-family:'Barlow Condensed',sans-serif; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; background:transparent; transition:all 0.3s ease; }
+    .btn-outline:hover { background:var(--gold); color:var(--black); transform:translateY(-2px); }
+    .btn-ghost { border:1px solid var(--border); color:var(--text-mid); font-family:'Barlow Condensed',sans-serif; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; background:transparent; transition:all 0.2s; }
+    .btn-ghost:hover { border-color:var(--gold); color:var(--gold); }
+    .cap-card { background:var(--dark-2); border:1px solid var(--border); transition:all 0.4s cubic-bezier(0.25,0.46,0.45,0.94); position:relative; overflow:hidden; }
+    .cap-card::before { content:''; position:absolute; inset:0; z-index:0; background:linear-gradient(135deg,rgba(201,168,76,0.05) 0%,transparent 60%); opacity:0; transition:opacity 0.4s; }
+    .cap-card:hover { border-color:var(--border-gold); transform:translateY(-6px); box-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 0 1px var(--border-gold); }
+    .cap-card:hover::before { opacity:1; }
+    .cap-card .card-img { overflow:hidden; }
+    .cap-card .card-img img { transition:transform 0.6s ease; }
+    .cap-card:hover .card-img img { transform:scale(1.07); }
+    .gold-line { width:40px; height:2px; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:1px; }
+    .gold-line-h { height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+    .cart-sidebar { transform:translateX(100%); transition:transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); background:var(--dark-1); border-left:1px solid var(--border); }
+    .cart-sidebar.open { transform:translateX(0); }
+    .cart-badge { animation:popIn 0.3s cubic-bezier(0.68,-0.55,0.27,1.55); }
+    .modal-bg { background:rgba(0,0,0,0.85); backdrop-filter:blur(10px); }
+    .modal-box { animation:fadeUp 0.35s ease forwards; background:var(--dark-2); border:1px solid var(--border); }
+    .toast { animation:toastIn 0.4s ease,toastOut 0.4s ease 2.4s forwards; background:var(--dark-3); border:1px solid var(--border-gold); color:var(--cream); }
+    .color-dot { width:22px; height:22px; border-radius:50%; border:2px solid var(--dark-4); cursor:pointer; transition:transform 0.2s,border-color 0.2s; }
+    .color-dot:hover { transform:scale(1.2); }
+    .color-dot.selected { border-color:var(--gold); transform:scale(1.2); box-shadow:0 0 0 2px var(--dark-2),0 0 0 4px var(--gold); }
+    .size-btn { border:1px solid var(--border); color:var(--text-mid); background:transparent; border-radius:4px; padding:5px 12px; font-size:13px; font-family:'Barlow Condensed',sans-serif; font-weight:600; letter-spacing:0.05em; cursor:pointer; transition:all 0.2s; }
+    .size-btn:hover { border-color:var(--gold); color:var(--gold); }
+    .size-btn.selected { background:var(--gold); color:var(--black); border-color:var(--gold); }
+    .badge-stock { font-size:10px; padding:2px 8px; border-radius:2px; font-weight:700; font-family:'Barlow Condensed',sans-serif; letter-spacing:0.08em; text-transform:uppercase; }
+    .badge-in  { background:rgba(34,197,94,0.15); color:#4ade80; border:1px solid rgba(34,197,94,0.3); }
+    .badge-low { background:rgba(201,168,76,0.15); color:var(--gold); border:1px solid var(--border-gold); }
+    .badge-out { background:rgba(239,68,68,0.12); color:#f87171; border:1px solid rgba(239,68,68,0.25); }
+    .filter-tab { padding:6px 18px; border-radius:2px; border:1px solid var(--border); font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-mid); cursor:pointer; transition:all 0.2s; }
+    .filter-tab:hover { border-color:var(--gold); color:var(--gold); }
+    .filter-tab.active { background:var(--gold); color:var(--black); border-color:var(--gold); }
+    .dark-input { background:var(--dark-3); border:1px solid var(--border); border-radius:4px; padding:10px 14px; width:100%; font-family:'Barlow',sans-serif; font-size:14px; color:var(--text-hi); outline:none; transition:border-color 0.2s,background 0.2s; }
+    .dark-input::placeholder { color:var(--text-lo); }
+    .dark-input:focus { border-color:var(--gold); background:var(--dark-4); }
+    textarea.dark-input { resize:vertical; min-height:80px; }
+    select.dark-input { cursor:pointer; }
+    .upload-area { border:1px dashed var(--border); transition:background 0.2s,border-color 0.2s; }
+    .upload-area:hover { border-color:var(--gold); background:var(--gold-dim); }
+    .admin-table th { background:var(--dark-3); font-family:'Barlow Condensed',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--text-lo); padding:10px 16px; border-bottom:1px solid var(--border); }
+    .admin-table td { padding:14px 16px; border-bottom:1px solid var(--border); color:var(--text-mid); }
+    .admin-table tr:hover td { background:var(--dark-3); }
+    .step-dot { width:28px; height:28px; border-radius:50%; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; font-family:'Barlow Condensed',sans-serif; transition:all 0.3s; color:var(--text-lo); }
+    .step-dot.active { background:var(--gold); border-color:var(--gold); color:var(--black); }
+    .step-dot.done { background:var(--dark-4); border-color:var(--gold); color:var(--gold); }
+    .step-line { flex:1; height:1px; background:var(--border); transition:background 0.3s; }
+    .step-line.done { background:var(--gold); }
+    .admin-sidebar-link { border-left:2px solid transparent; transition:all 0.2s; color:var(--text-mid); }
+    .admin-sidebar-link:hover,.admin-sidebar-link.active { border-left-color:var(--gold); background:var(--gold-dim); color:var(--gold); }
+    .stat-card { border-left:3px solid var(--gold); background:var(--dark-2); }
+    .wa-float { background:#25d366; box-shadow:0 4px 20px rgba(37,211,102,0.3); transition:transform 0.3s,box-shadow 0.3s; }
+    .wa-float:hover { transform:scale(1.08); box-shadow:0 8px 30px rgba(37,211,102,0.5); }
+    .products-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; }
+    @media(max-width:640px){ .products-grid { grid-template-columns:repeat(2,1fr); gap:12px; } }
+    .qty-btn { width:30px; height:30px; border-radius:3px; border:1px solid var(--border); background:var(--dark-3); cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:all 0.2s; color:var(--text-mid); }
+    .qty-btn:hover { border-color:var(--gold); color:var(--gold); }
+    .dark-check { accent-color:var(--gold); }
+    .hero-geo { background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px); background-size:60px 60px; }
+    .announce-bar { background:var(--gold); color:var(--black); font-family:'Barlow Condensed',sans-serif; letter-spacing:0.1em; }
+    .section-label { font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); }
+    #admin-login-overlay { display:flex; }
+    .skeleton { background:linear-gradient(90deg,var(--dark-3) 25%,var(--dark-4) 50%,var(--dark-3) 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:4px; }
+    .hero-slash { position:absolute; right:-10%; top:0; width:45%; height:100%; background:linear-gradient(135deg,var(--dark-2) 0%,var(--dark-1) 100%); clip-path:polygon(15% 0,100% 0,100% 100%,0% 100%); border-left:1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<div id="toast-container" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[300] flex flex-col gap-2 items-center pointer-events-none"></div>
+<div id="cart-overlay" class="fixed inset-0 z-[90] hidden" style="background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);" onclick="closeCart()"></div>
+
+<!-- CART SIDEBAR -->
+<div id="cart-sidebar" class="cart-sidebar fixed top-0 right-0 h-full w-full max-w-sm z-[100] shadow-2xl flex flex-col">
+  <div class="flex items-center justify-between px-5 py-4 border-b" style="border-color:var(--border)">
+    <div class="flex items-center gap-2">
+      <svg class="w-4 h-4" style="color:var(--gold)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <h2 class="condensed font-bold text-base tracking-wider uppercase" style="color:var(--cream)">Mon Panier</h2>
+    </div>
+    <button onclick="closeCart()" class="p-1.5 rounded hover:bg-white/5 transition-colors" style="color:var(--text-mid)">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div id="cart-items" class="flex-1 overflow-y-auto px-5 py-4 space-y-4"></div>
+  <div id="cart-footer" class="hidden px-5 py-5 border-t space-y-4" style="border-color:var(--border)">
+    <div class="flex justify-between items-center">
+      <span class="text-sm" style="color:var(--text-mid)">Sous-total</span>
+      <span id="cart-subtotal" class="condensed font-bold text-2xl tracking-wide" style="color:var(--gold)">0 FCFA</span>
+    </div>
+    <div class="gold-line-h"></div>
+    <button onclick="openCheckout()" class="btn-gold w-full py-3.5 rounded text-sm">Commander →</button>
+    <button onclick="closeCart()" class="btn-outline w-full py-3 rounded text-sm">Continuer</button>
+  </div>
+  <div id="cart-empty" class="flex-1 flex flex-col items-center justify-center text-center p-8">
+    <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" style="background:var(--dark-3);border:1px solid var(--border)">
+      <svg class="w-7 h-7" style="color:var(--text-lo)" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    </div>
+    <p class="condensed font-bold text-sm tracking-widest uppercase mb-1" style="color:var(--text-mid)">Panier vide</p>
+    <p class="text-xs" style="color:var(--text-lo)">Découvrez la collection</p>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkout-modal" class="fixed inset-0 z-[200] hidden">
+  <div class="modal-bg absolute inset-0" onclick="closeCheckout()"></div>
+  <div class="relative z-10 w-full h-full overflow-y-auto flex items-center justify-center p-4">
+    <div class="modal-box rounded w-full max-w-lg shadow-2xl overflow-hidden">
+      <div class="px-6 py-5 border-b" style="border-color:var(--border)">
+        <p class="section-label mb-1">Easy Cap 221</p>
+        <h2 class="display text-3xl" style="color:var(--cream)">Commander</h2>
+        <div class="flex items-center gap-2 mt-4">
+          <div class="step-dot active" id="step1-dot">1</div>
+          <div class="step-line" id="step1-line"></div>
+          <div class="step-dot" id="step2-dot">2</div>
+          <div class="step-line" id="step2-line"></div>
+          <div class="step-dot" id="step3-dot">✓</div>
+        </div>
+        <div class="flex justify-between mt-1">
+          <span class="text-xs" style="color:var(--text-lo)">Infos</span>
+          <span class="text-xs" style="color:var(--text-lo)">Livraison</span>
+          <span class="text-xs" style="color:var(--text-lo)">Confirmation</span>
+        </div>
+      </div>
+      <div id="checkout-step1" class="p-6 space-y-4">
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Prénom *</label><input id="co-fname" class="dark-input" placeholder="Prénom"></div>
+          <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Nom *</label><input id="co-lname" class="dark-input" placeholder="Nom"></div>
+        </div>
+        <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Téléphone *</label><input id="co-phone" class="dark-input" placeholder="+221 7X XXX XX XX" type="tel"></div>
+        <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Email</label><input id="co-email" class="dark-input" placeholder="email@exemple.com" type="email"></div>
+        <button onclick="checkoutNext(2)" class="btn-gold w-full py-3.5 rounded text-sm mt-2">Continuer →</button>
+      </div>
+      <div id="checkout-step2" class="p-6 space-y-4 hidden">
+        <div>
+          <label class="block text-xs condensed font-semibold tracking-wider uppercase mb-2" style="color:var(--text-mid)">Livraison *</label>
+          <div class="space-y-2">
+            <label class="flex items-center gap-3 p-3 border rounded cursor-pointer transition-colors hover:border-yellow-600/50" style="border-color:var(--border);background:var(--dark-3)"><input type="radio" name="delivery" value="dakar" class="dark-check" checked><div class="flex-1"><div class="condensed font-semibold text-sm" style="color:var(--cream)">Livraison Dakar</div><div class="text-xs" style="color:var(--text-lo)">2-4h · 1 500 FCFA</div></div><span class="condensed font-bold text-sm" style="color:var(--gold)">1 500 FCFA</span></label>
+            <label class="flex items-center gap-3 p-3 border rounded cursor-pointer transition-colors hover:border-yellow-600/50" style="border-color:var(--border);background:var(--dark-3)"><input type="radio" name="delivery" value="banlieue" class="dark-check"><div class="flex-1"><div class="condensed font-semibold text-sm" style="color:var(--cream)">Banlieue / Autres villes</div><div class="text-xs" style="color:var(--text-lo)">24-48h · 3 000 FCFA</div></div><span class="condensed font-bold text-sm" style="color:var(--gold)">3 000 FCFA</span></label>
+            <label class="flex items-center gap-3 p-3 border rounded cursor-pointer transition-colors hover:border-yellow-600/50" style="border-color:var(--border);background:var(--dark-3)"><input type="radio" name="delivery" value="pickup" class="dark-check"><div class="flex-1"><div class="condensed font-semibold text-sm" style="color:var(--cream)">Retrait boutique</div><div class="text-xs" style="color:var(--text-lo)">Plateau, Dakar · Gratuit</div></div><span class="condensed font-bold text-sm" style="color:#4ade80">Gratuit</span></label>
+          </div>
+        </div>
+        <div id="address-field"><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Adresse *</label><textarea id="co-address" class="dark-input" placeholder="Quartier, rue, description..."></textarea></div>
+        <div>
+          <label class="block text-xs condensed font-semibold tracking-wider uppercase mb-2" style="color:var(--text-mid)">Paiement *</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="flex flex-col items-center gap-1.5 p-3 border rounded cursor-pointer text-xs condensed font-semibold uppercase tracking-wide transition-colors hover:border-yellow-600/50" style="border-color:var(--border);background:var(--dark-3);color:var(--text-mid)"><input type="radio" name="payment" value="wave" class="dark-check hidden"><span class="text-2xl">📱</span>Wave</label>
+            <label class="flex flex-col items-center gap-1.5 p-3 border rounded cursor-pointer text-xs condensed font-semibold uppercase tracking-wide transition-colors hover:border-yellow-600/50" style="border-color:var(--border);background:var(--dark-3);color:var(--text-mid)"><input type="radio" name="payment" value="om" class="dark-check hidden" checked><span class="text-2xl">🟠</span>Orange</label>
+            <label class="flex flex-col items-center gap-1.5 p-3 border rounded cursor-pointer text-xs condensed font-semibold uppercase tracking-wide transition-colors hover:border-yellow-600/50" style="border-color:var(--border);background:var(--dark-3);color:var(--text-mid)"><input type="radio" name="payment" value="cash" class="dark-check hidden"><span class="text-2xl">💵</span>Cash</label>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <button onclick="checkoutBack(1)" class="btn-ghost flex-1 py-3 rounded text-sm">← Retour</button>
+          <button onclick="checkoutNext(3)" class="btn-gold flex-1 py-3 rounded text-sm">Confirmer →</button>
+        </div>
+      </div>
+      <div id="checkout-step3" class="p-6 hidden">
+        <div class="text-center mb-6">
+          <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3" style="background:var(--gold-dim);border:1px solid var(--border-gold)">
+            <svg class="w-6 h-6" style="color:var(--gold)" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <h3 class="display text-3xl mb-1" style="color:var(--cream)">Confirmée !</h3>
+          <p class="text-sm" style="color:var(--text-mid)">On vous contacte rapidement</p>
+        </div>
+        <div id="order-summary-final" class="rounded p-4 mb-4 space-y-2 text-sm" style="background:var(--dark-3);border:1px solid var(--border)"></div>
+        <button onclick="sendWhatsApp()" class="w-full py-3.5 rounded condensed font-bold text-sm text-white tracking-wide uppercase mb-3" style="background:#25d366">📲 Valider via WhatsApp</button>
+        <button onclick="closeCheckout();clearCart()" class="btn-ghost w-full py-3 rounded text-sm">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div id="product-modal" class="fixed inset-0 z-[150] hidden">
+  <div class="modal-bg absolute inset-0" onclick="closeProductModal()"></div>
+  <div class="relative z-10 w-full h-full overflow-y-auto flex items-center justify-center p-4">
+    <div class="modal-box rounded w-full max-w-2xl overflow-hidden">
+      <button onclick="closeProductModal()" class="absolute top-4 right-4 z-20 w-8 h-8 rounded flex items-center justify-center transition-colors hover:bg-white/10" style="background:var(--dark-4);border:1px solid var(--border);color:var(--text-mid)">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="flex flex-col md:flex-row">
+        <div class="md:w-1/2 relative" style="min-height:320px;background:var(--dark-3)">
+          <img id="pm-img" src="" alt="" class="w-full h-full object-cover" style="min-height:320px">
+          <div id="pm-badge" class="absolute top-3 left-3 hidden"><span class="badge-stock badge-low">Stock limité</span></div>
+          <div class="absolute bottom-0 left-0 w-8 h-8" style="background:linear-gradient(135deg,var(--gold) 0%,transparent 70%);opacity:0.4"></div>
+        </div>
+        <div class="md:w-1/2 p-6 flex flex-col gap-4">
+          <div>
+            <p id="pm-model" class="section-label mb-1"></p>
+            <h2 id="pm-name" class="display text-4xl leading-none" style="color:var(--cream)"></h2>
+            <p id="pm-price" class="condensed font-bold text-2xl tracking-wide mt-2" style="color:var(--gold)"></p>
+          </div>
+          <div class="gold-line-h"></div>
+          <div id="pm-colors-wrap">
+            <p class="text-xs condensed font-semibold tracking-wider uppercase mb-2" style="color:var(--text-mid)">Couleur: <span id="pm-selected-color" class="font-normal" style="color:var(--gold)"></span></p>
+            <div id="pm-colors" class="flex flex-wrap gap-2"></div>
+          </div>
+          <div id="pm-sizes-wrap">
+            <p class="text-xs condensed font-semibold tracking-wider uppercase mb-2" style="color:var(--text-mid)">Taille</p>
+            <div id="pm-sizes" class="flex flex-wrap gap-2"></div>
+          </div>
+          <p id="pm-desc" class="text-sm leading-relaxed" style="color:var(--text-mid)"></p>
+          <div class="flex items-center gap-3">
+            <p class="text-xs condensed font-semibold tracking-wider uppercase" style="color:var(--text-mid)">Qté</p>
+            <div class="flex items-center gap-1 rounded px-1" style="border:1px solid var(--border);background:var(--dark-3)">
+              <button class="qty-btn" onclick="pmQtyChange(-1)">−</button>
+              <span id="pm-qty" class="condensed font-bold text-sm w-7 text-center" style="color:var(--cream)">1</span>
+              <button class="qty-btn" onclick="pmQtyChange(1)">+</button>
+            </div>
+          </div>
+          <button id="pm-add-btn" onclick="addFromModal()" class="btn-gold py-3.5 rounded text-sm w-full mt-auto">Ajouter au panier</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN SITE -->
+<div id="main-site" style="position:relative;z-index:1">
+  <div class="announce-bar text-center py-1.5 px-4 text-xs font-bold tracking-widest uppercase">✦ Livraison rapide Dakar — Wave &amp; Orange Money acceptés ✦</div>
+
+  <nav id="navbar" class="fixed top-6 left-0 w-full z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3" style="text-decoration:none">
+        <div class="w-9 h-9 rounded flex items-center justify-center" style="background:var(--gold);border:1px solid var(--gold-light)"><span class="display text-black text-xs tracking-wider">EC</span></div>
+        <div><p class="display text-lg leading-none" style="color:var(--cream)">Easy Cap <span style="color:var(--gold)">221</span></p><p class="text-xs tracking-widest uppercase" style="color:var(--text-lo);font-size:9px">Dakar · Premium</p></div>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#collection" class="nav-link text-sm condensed font-semibold tracking-wider uppercase">Collection</a>
+        <a href="#about" class="nav-link text-sm condensed font-semibold tracking-wider uppercase">À Propos</a>
+        <a href="#contact" class="nav-link text-sm condensed font-semibold tracking-wider uppercase">Contact</a>
+        <div class="w-px h-4" style="background:var(--border)"></div>
+        <button onclick="openCart()" class="relative p-2 rounded hover:bg-white/5 transition-colors">
+          <svg class="w-5 h-5" style="color:var(--text-mid)" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span id="cart-count" class="cart-badge hidden absolute -top-1 -right-1 w-5 h-5 text-black text-xs font-black rounded-full flex items-center justify-center" style="background:var(--gold);font-family:'Barlow Condensed',sans-serif">0</span>
+        </button>
+      </div>
+      <div class="md:hidden flex items-center gap-3">
+        <button onclick="openCart()" class="relative p-2">
+          <svg class="w-5 h-5" style="color:var(--text-mid)" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span id="cart-count-mobile" class="cart-badge hidden absolute -top-1 -right-1 w-5 h-5 text-black text-xs font-black rounded-full flex items-center justify-center" style="background:var(--gold);font-family:'Barlow Condensed',sans-serif">0</span>
+        </button>
+        <button onclick="toggleMobileMenu()" class="p-2" style="color:var(--text-mid)">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden px-6 py-4 space-y-3 shadow-xl border-t" style="background:var(--dark-1);border-color:var(--border)">
+      <a href="#collection" onclick="toggleMobileMenu()" class="block text-sm condensed font-semibold tracking-wider uppercase py-2" style="color:var(--text-mid)">Collection</a>
+      <a href="#about" onclick="toggleMobileMenu()" class="block text-sm condensed font-semibold tracking-wider uppercase py-2" style="color:var(--text-mid)">À Propos</a>
+      <a href="#contact" onclick="toggleMobileMenu()" class="block text-sm condensed font-semibold tracking-wider uppercase py-2" style="color:var(--text-mid)">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-geo relative overflow-hidden" style="min-height:100vh;padding-top:120px;background:var(--dark-1)">
+    <div class="hero-slash hidden md:block"></div>
+    <div class="absolute top-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent,var(--gold),transparent)"></div>
+    <div class="relative max-w-7xl mx-auto px-6 flex flex-col justify-center" style="min-height:calc(100vh - 120px);padding-bottom:80px">
+      <div class="max-w-2xl">
+        <div class="afu flex items-center gap-3 mb-6">
+          <div class="w-6 h-px" style="background:var(--gold)"></div>
+          <span class="section-label">Dakar · Sénégal · Est. 2022</span>
+          <div class="w-6 h-px" style="background:var(--gold)"></div>
+        </div>
+        <h1 class="afu d1 display leading-none mb-2" style="font-size:clamp(4rem,11vw,9rem);color:var(--cream)">ELEVATE</h1>
+        <h1 class="afu d2 display leading-none mb-6" style="font-size:clamp(4rem,11vw,9rem);-webkit-text-stroke:2px var(--gold);color:transparent">YOUR STYLE</h1>
+        <p class="afu d3 max-w-md mb-10 leading-relaxed" style="color:var(--text-mid);font-size:15px">Premium caps &amp; hats crafted for the culture.<br>Représente le <span style="color:var(--gold);font-weight:600">221</span> avec style.</p>
+        <div class="afu d4 flex flex-wrap gap-4">
+          <a href="#collection" class="btn-gold px-8 py-4 rounded text-sm" style="text-decoration:none">Voir la Collection</a>
+          <a href="#about" class="btn-outline px-8 py-4 rounded text-sm" style="text-decoration:none">Notre Histoire</a>
+        </div>
+        <div class="afu d5 flex gap-10 mt-14 pt-10 border-t" style="border-color:var(--border)">
+          <div><p class="display text-4xl" style="color:var(--gold)" id="hero-stat-products">0+</p><p class="section-label" style="font-size:10px">Modèles</p></div>
+          <div class="w-px" style="background:var(--border)"></div>
+          <div><p class="display text-4xl" style="color:var(--gold)">500+</p><p class="section-label" style="font-size:10px">Clients</p></div>
+          <div class="w-px" style="background:var(--border)"></div>
+          <div><p class="display text-4xl" style="color:var(--gold)">221</p><p class="section-label" style="font-size:10px">Sénégal</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2" style="opacity:0.4"><div class="w-px h-8" style="background:linear-gradient(to bottom,var(--gold),transparent)"></div></div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="overflow-hidden py-3 border-y" style="border-color:var(--border);background:var(--dark-2)">
+    <div class="marquee-track">
+      <span class="inline-flex items-center gap-5 px-5">
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">Snapback</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">Fitted Cap</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">Dad Hat</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">Trucker Cap</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--gold)">Easy Cap 221</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">Bucket Hat</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">New Era</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">Dakar</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">Snapback</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">Fitted Cap</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">Dad Hat</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--gold)">Easy Cap 221</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">Bucket Hat</span><span style="color:var(--gold);font-size:8px">◆</span>
+        <span class="condensed text-xs font-bold tracking-widest uppercase" style="color:var(--text-lo)">Dakar</span><span style="color:var(--gold);font-size:8px">◆</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- COLLECTION -->
+  <section id="collection" class="py-20" style="background:var(--black)">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div><p class="section-label mb-2">— Notre Catalogue</p><h2 class="display leading-none" style="font-size:clamp(2.5rem,6vw,5rem);color:var(--cream)">Collection</h2></div>
+        <div class="flex flex-wrap gap-2" id="filter-tabs">
+          <button class="filter-tab active" onclick="filterProducts('all',this)">Tout voir</button>
+          <button class="filter-tab" onclick="filterProducts('snapback',this)">Snapback</button>
+          <button class="filter-tab" onclick="filterProducts('dad-hat',this)">Dad Hat</button>
+          <button class="filter-tab" onclick="filterProducts('fitted',this)">Fitted</button>
+          <button class="filter-tab" onclick="filterProducts('bucket',this)">Bucket</button>
+        </div>
+      </div>
+      <div id="products-grid" class="products-grid"></div>
+      <div id="products-empty" class="hidden text-center py-20">
+        <div class="w-16 h-16 rounded flex items-center justify-center mx-auto mb-4" style="background:var(--dark-2);border:1px solid var(--border)">
+          <svg class="w-7 h-7" style="color:var(--text-lo)" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+        </div>
+        <p class="condensed font-bold tracking-widest uppercase text-sm" style="color:var(--text-lo)">Aucun produit</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="py-20" style="background:var(--dark-1);border-top:1px solid var(--border)">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <p class="section-label mb-3">— Notre Histoire</p>
+          <h2 class="display leading-none mb-6" style="font-size:clamp(2.5rem,6vw,5rem);color:var(--cream)">Easy Cap<br><span style="color:var(--gold)">221</span></h2>
+          <p class="leading-relaxed mb-4" style="color:var(--text-mid)"><strong style="color:var(--cream)">Easy Cap 221</strong> est né d'une passion pour le style et la culture urbaine sénégalaise. Basés à Dakar, nous sélectionnons les meilleures casquettes pour exprimer votre identité.</p>
+          <p class="leading-relaxed mb-8" style="color:var(--text-mid)">Chaque pièce est choisie avec soin pour offrir qualité, confort et style.</p>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="p-4 rounded border" style="background:var(--dark-2);border-color:var(--border)"><p class="display text-3xl mb-0.5" style="color:var(--gold)">100%</p><p class="section-label" style="font-size:10px">Qualité Premium</p></div>
+            <div class="p-4 rounded border" style="background:var(--dark-2);border-color:var(--border)"><p class="display text-3xl mb-0.5" style="color:var(--gold)">48h</p><p class="section-label" style="font-size:10px">Livraison</p></div>
+            <div class="p-4 rounded border" style="background:var(--dark-2);border-color:var(--border)"><p class="display text-3xl mb-0.5" style="color:var(--gold)">500+</p><p class="section-label" style="font-size:10px">Clients satisfaits</p></div>
+            <div class="p-4 rounded border" style="background:var(--dark-2);border-color:var(--border)"><p class="display text-3xl mb-0.5" style="color:var(--gold)">221</p><p class="section-label" style="font-size:10px">Fièrement sénégalais</p></div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="rounded aspect-square flex items-center justify-center relative overflow-hidden" style="background:var(--dark-2);border:1px solid var(--border);max-height:480px">
+            <div class="absolute inset-0" style="background:linear-gradient(135deg,var(--gold-dim) 0%,transparent 60%)"></div>
+            <div class="absolute inset-6 border" style="border-color:var(--border-gold);border-radius:2px"></div>
+            <div class="relative text-center p-8">
+              <div class="w-20 h-20 rounded flex items-center justify-center mx-auto mb-4" style="background:var(--gold);box-shadow:0 0 40px rgba(201,168,76,0.3)"><span class="display text-black text-3xl">EC</span></div>
+              <p class="display text-3xl mb-1" style="color:var(--cream)">Easy Cap 221</p>
+              <p class="section-label" style="font-size:10px">Since 2022 · Dakar, Sénégal</p>
+            </div>
+          </div>
+          <div class="absolute -bottom-4 -left-4 rounded p-4 shadow-xl" style="background:var(--dark-2);border:1px solid var(--border-gold)">
+            <div class="flex items-center gap-2"><span style="color:var(--gold)">★</span><div><p class="condensed font-bold text-sm" style="color:var(--cream)">4.9/5</p><p class="text-xs" style="color:var(--text-lo)">Avis clients</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="py-12 border-y" style="background:var(--dark-2);border-color:var(--border)">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="text-center"><div class="w-10 h-10 rounded flex items-center justify-center mx-auto mb-3" style="background:var(--gold-dim);border:1px solid var(--border-gold)"><svg class="w-5 h-5" style="color:var(--gold)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div><p class="condensed font-bold text-sm tracking-wide" style="color:var(--cream)">Livraison rapide</p><p class="text-xs mt-0.5" style="color:var(--text-lo)">Partout au Sénégal</p></div>
+        <div class="text-center"><div class="w-10 h-10 rounded flex items-center justify-center mx-auto mb-3" style="background:var(--gold-dim);border:1px solid var(--border-gold)"><svg class="w-5 h-5" style="color:var(--gold)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div><p class="condensed font-bold text-sm tracking-wide" style="color:var(--cream)">Paiement sécurisé</p><p class="text-xs mt-0.5" style="color:var(--text-lo)">Wave · Orange Money</p></div>
+        <div class="text-center"><div class="w-10 h-10 rounded flex items-center justify-center mx-auto mb-3" style="background:var(--gold-dim);border:1px solid var(--border-gold)"><svg class="w-5 h-5" style="color:var(--gold)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div><p class="condensed font-bold text-sm tracking-wide" style="color:var(--cream)">Support WhatsApp</p><p class="text-xs mt-0.5" style="color:var(--text-lo)">Réponse rapide</p></div>
+        <div class="text-center"><div class="w-10 h-10 rounded flex items-center justify-center mx-auto mb-3" style="background:var(--gold-dim);border:1px solid var(--border-gold)"><svg class="w-5 h-5" style="color:var(--gold)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg></div><p class="condensed font-bold text-sm tracking-wide" style="color:var(--cream)">Retours faciles</p><p class="text-xs mt-0.5" style="color:var(--text-lo)">7 jours sans souci</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-20" style="background:var(--dark-1);border-top:1px solid var(--border)">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl mx-auto text-center">
+        <p class="section-label mb-3">— Nous Contacter</p>
+        <h2 class="display leading-none mb-4" style="font-size:clamp(2.5rem,6vw,4.5rem);color:var(--cream)">On est là 🤙</h2>
+        <p class="mb-10" style="color:var(--text-mid)">Une question, un besoin spécial — écrivez-nous</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+          <a href="https://wa.me/221700000000" target="_blank" class="p-5 rounded border text-center block hover:border-yellow-600/40 transition-colors" style="background:var(--dark-2);border-color:var(--border);text-decoration:none"><div class="text-3xl mb-2">📱</div><p class="condensed font-bold text-sm tracking-wide" style="color:var(--cream)">WhatsApp</p><p class="text-xs mt-0.5" style="color:var(--text-lo)">+221 70 000 00 00</p></a>
+          <a href="https://instagram.com/easycap221" target="_blank" class="p-5 rounded border text-center block hover:border-yellow-600/40 transition-colors" style="background:var(--dark-2);border-color:var(--border);text-decoration:none"><div class="text-3xl mb-2">📸</div><p class="condensed font-bold text-sm tracking-wide" style="color:var(--cream)">Instagram</p><p class="text-xs mt-0.5" style="color:var(--text-lo)">@easycap221</p></a>
+          <div class="p-5 rounded border text-center" style="background:var(--dark-2);border-color:var(--border)"><div class="text-3xl mb-2">📍</div><p class="condensed font-bold text-sm tracking-wide" style="color:var(--cream)">Boutique</p><p class="text-xs mt-0.5" style="color:var(--text-lo)">Plateau, Dakar</p></div>
+        </div>
+        <div class="rounded border p-6 text-left" style="background:var(--dark-2);border-color:var(--border)">
+          <p class="condensed font-bold text-base tracking-wider uppercase mb-4" style="color:var(--cream)">Envoyer un message</p>
+          <div class="space-y-3">
+            <input id="contact-name" class="dark-input" placeholder="Votre nom">
+            <input id="contact-phone" class="dark-input" placeholder="Téléphone / WhatsApp" type="tel">
+            <textarea id="contact-msg" class="dark-input" placeholder="Votre message..."></textarea>
+            <button onclick="sendContactWhatsApp()" class="btn-gold w-full py-3.5 rounded text-sm">Envoyer via WhatsApp 📲</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-8 border-t" style="background:var(--black);border-color:var(--border)">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2"><div class="w-7 h-7 rounded flex items-center justify-center" style="background:var(--gold)"><span class="display text-black text-xs">EC</span></div><span class="condensed font-bold tracking-wider" style="color:var(--cream)">Easy Cap <span style="color:var(--gold)">221</span></span></div>
+      <p class="text-xs" style="color:var(--text-lo)">© 2024 Easy Cap 221 · Dakar, Sénégal · Made with ♥</p>
+      <button onclick="goAdmin()" class="text-xs hover:text-gray-400 transition-colors" style="color:var(--text-lo)">Admin</button>
+    </div>
+  </footer>
+</div>
+
+<a href="https://wa.me/221700000000" target="_blank" class="wa-float fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full flex items-center justify-center shadow-xl" title="WhatsApp">
+  <svg viewBox="0 0 24 24" class="w-7 h-7" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel" class="fixed inset-0 z-[500] hidden" style="background:var(--dark-1)">
+  <div id="admin-login-overlay" class="absolute inset-0 z-[510] flex items-center justify-center" style="background:var(--black)">
+    <div class="rounded w-full max-w-xs p-8 shadow-2xl" style="background:var(--dark-2);border:1px solid var(--border)">
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded flex items-center justify-center mx-auto mb-3" style="background:var(--gold)"><svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h2 class="display text-2xl mb-0.5" style="color:var(--cream)">Admin Panel</h2>
+        <p class="text-xs" style="color:var(--text-lo)">Easy Cap 221</p>
+      </div>
+      <input id="admin-pass-input" type="password" class="dark-input mb-3" placeholder="Mot de passe admin" onkeydown="if(event.key==='Enter') checkAdminPass()">
+      <button onclick="checkAdminPass()" class="btn-gold w-full py-3 rounded text-sm">Connexion</button>
+      <p id="admin-pass-error" class="text-xs text-center mt-2 hidden" style="color:#f87171">Mot de passe incorrect</p>
+      <button onclick="closeAdmin()" class="text-xs w-full text-center mt-4 hover:text-gray-400 transition-colors" style="color:var(--text-lo)">← Retour boutique</button>
+    </div>
+  </div>
+  <div id="admin-layout" class="hidden h-full flex">
+    <div class="w-52 flex flex-col h-full shrink-0" style="background:var(--dark-2);border-right:1px solid var(--border)">
+      <div class="p-4 border-b" style="border-color:var(--border)"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded flex items-center justify-center" style="background:var(--gold)"><span class="display text-black text-xs">EC</span></div><div><p class="condensed font-bold text-sm" style="color:var(--cream)">Easy Cap</p><p class="text-xs" style="color:var(--text-lo)">Admin Panel</p></div></div></div>
+      <nav class="flex-1 py-4 space-y-0.5 px-2">
+        <button onclick="adminNav('dashboard')" class="admin-sidebar-link active w-full text-left px-3 py-2.5 rounded-r text-sm condensed font-semibold tracking-wide uppercase flex items-center gap-2.5" id="nav-dashboard"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</button>
+        <button onclick="adminNav('products')" class="admin-sidebar-link w-full text-left px-3 py-2.5 rounded-r text-sm condensed font-semibold tracking-wide uppercase flex items-center gap-2.5" id="nav-products"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7l-8 5-8-5V5l8 5 8-5v2zM4 5v14a2 2 0 002 2h12a2 2 0 002-2V5"/></svg>Produits</button>
+        <button onclick="adminNav('add-product')" class="admin-sidebar-link w-full text-left px-3 py-2.5 rounded-r text-sm condensed font-semibold tracking-wide uppercase flex items-center gap-2.5" id="nav-add-product"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>Ajouter</button>
+        <button onclick="adminNav('orders')" class="admin-sidebar-link w-full text-left px-3 py-2.5 rounded-r text-sm condensed font-semibold tracking-wide uppercase flex items-center gap-2.5" id="nav-orders"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg>Commandes</button>
+        <button onclick="adminNav('settings')" class="admin-sidebar-link w-full text-left px-3 py-2.5 rounded-r text-sm condensed font-semibold tracking-wide uppercase flex items-center gap-2.5" id="nav-settings"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Paramètres</button>
+      </nav>
+      <div class="p-3 border-t" style="border-color:var(--border)"><button onclick="closeAdmin()" class="w-full text-left px-3 py-2 text-xs condensed font-semibold tracking-wide uppercase flex items-center gap-2 transition-colors hover:text-red-400" style="color:var(--text-lo)"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Quitter</button></div>
+    </div>
+    <div class="flex-1 overflow-y-auto" style="background:var(--dark-1)">
+      <div class="px-6 py-4 flex items-center justify-between sticky top-0 z-10" style="background:var(--dark-2);border-bottom:1px solid var(--border)">
+        <h1 id="admin-page-title" class="display text-2xl" style="color:var(--cream)">Dashboard</h1>
+        <div class="flex items-center gap-2"><span class="text-xs" style="color:var(--text-lo)">Admin connecté</span><div class="w-6 h-6 rounded flex items-center justify-center condensed font-bold text-xs text-black" style="background:var(--gold)">A</div></div>
+      </div>
+      <!-- DASHBOARD -->
+      <div id="admin-dashboard" class="p-6 space-y-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="stat-card rounded p-4" style="border:1px solid var(--border)"><p class="section-label mb-1" style="font-size:9px">Produits</p><p id="stat-products" class="display text-3xl" style="color:var(--cream)">0</p></div>
+          <div class="stat-card rounded p-4" style="border:1px solid var(--border)"><p class="section-label mb-1" style="font-size:9px">Commandes</p><p id="stat-orders" class="display text-3xl" style="color:var(--cream)">0</p></div>
+          <div class="stat-card rounded p-4" style="border:1px solid var(--border)"><p class="section-label mb-1" style="font-size:9px">Revenus</p><p id="stat-revenue" class="display text-3xl" style="color:var(--gold)">0</p></div>
+          <div class="stat-card rounded p-4" style="border:1px solid var(--border)"><p class="section-label mb-1" style="font-size:9px">En stock</p><p id="stat-instock" class="display text-3xl" style="color:var(--cream)">0</p></div>
+        </div>
+        <div class="rounded overflow-hidden" style="background:var(--dark-2);border:1px solid var(--border)">
+          <div class="px-5 py-3 border-b flex items-center justify-between" style="border-color:var(--border)"><p class="condensed font-bold text-sm tracking-wider uppercase" style="color:var(--cream)">Commandes récentes</p><button onclick="adminNav('orders')" class="condensed font-semibold text-xs tracking-wider uppercase" style="color:var(--gold)">Voir tout →</button></div>
+          <div id="recent-orders-list" class="divide-y" style="border-color:var(--border)"><p class="p-5 text-sm" style="color:var(--text-lo)">Aucune commande</p></div>
+        </div>
+        <div class="rounded overflow-hidden" style="background:var(--dark-2);border:1px solid var(--border)">
+          <div class="px-5 py-3 border-b flex items-center justify-between" style="border-color:var(--border)"><p class="condensed font-bold text-sm tracking-wider uppercase" style="color:var(--cream)">Produits récents</p><button onclick="adminNav('products')" class="condensed font-semibold text-xs tracking-wider uppercase" style="color:var(--gold)">Gérer →</button></div>
+          <div id="dashboard-products" class="divide-y" style="border-color:var(--border)"></div>
+        </div>
+      </div>
+      <!-- PRODUCTS -->
+      <div id="admin-products" class="p-6 hidden">
+        <div class="flex items-center justify-between mb-5"><p class="text-sm" style="color:var(--text-mid)"><span id="products-count">0</span> produit(s)</p><div class="flex gap-2"><input id="admin-search" oninput="adminSearchProducts()" class="dark-input w-44 text-sm py-2 px-3" placeholder="Rechercher..."><button onclick="adminNav('add-product')" class="btn-gold px-4 py-2 rounded text-xs">+ Ajouter</button></div></div>
+        <div class="rounded overflow-hidden" style="background:var(--dark-2);border:1px solid var(--border)"><table class="admin-table w-full text-sm"><thead><tr><th class="text-left">Produit</th><th class="text-left">Catégorie</th><th class="text-left">Prix</th><th class="text-left">Stock</th><th class="text-left">Actions</th></tr></thead><tbody id="admin-products-tbody"></tbody></table></div>
+      </div>
+      <!-- ADD/EDIT -->
+      <div id="admin-add-product" class="p-6 hidden">
+        <div class="max-w-2xl">
+          <div id="edit-banner" class="hidden mb-4 rounded p-3 text-sm flex items-center gap-2" style="background:rgba(201,168,76,0.08);border:1px solid var(--border-gold);color:var(--gold)"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Modification en cours</div>
+          <div class="space-y-5">
+            <input type="hidden" id="prod-edit-id">
+            <div class="grid grid-cols-2 gap-4">
+              <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Nom *</label><input id="prod-name" class="dark-input" placeholder="Ex: Supreme Cobra"></div>
+              <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Catégorie *</label><select id="prod-category" class="dark-input"><option value="snapback">Snapback</option><option value="dad-hat">Dad Hat</option><option value="fitted">Fitted Cap</option><option value="bucket">Bucket Hat</option><option value="trucker">Trucker Cap</option></select></div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Prix (FCFA) *</label><input id="prod-price" class="dark-input" type="number" placeholder="5000" min="0"></div>
+              <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Stock</label><input id="prod-stock" class="dark-input" type="number" placeholder="10" min="0"></div>
+            </div>
+            <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Description</label><textarea id="prod-desc" class="dark-input" placeholder="Décrivez la casquette..."></textarea></div>
+            <div>
+              <label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Couleurs</label>
+              <div id="colors-list" class="space-y-2 mb-2"></div>
+              <div class="flex gap-2 items-center"><input type="color" id="new-color-hex" value="#000000" class="w-10 h-9 rounded cursor-pointer" style="border:1px solid var(--border);background:var(--dark-3)"><input id="new-color-name" class="dark-input flex-1 text-sm py-2" placeholder="Nom de la couleur"><button onclick="addColorOption()" class="btn-gold px-3 py-2 rounded text-xs whitespace-nowrap">+ Ajouter</button></div>
+            </div>
+            <div>
+              <label class="block text-xs condensed font-semibold tracking-wider uppercase mb-2" style="color:var(--text-mid)">Tailles</label>
+              <div class="flex flex-wrap gap-3">
+                <label class="flex items-center gap-1.5 text-sm cursor-pointer" style="color:var(--text-mid)"><input type="checkbox" value="S/M" class="dark-check size-check"> S/M</label>
+                <label class="flex items-center gap-1.5 text-sm cursor-pointer" style="color:var(--text-mid)"><input type="checkbox" value="L/XL" class="dark-check size-check"> L/XL</label>
+                <label class="flex items-center gap-1.5 text-sm cursor-pointer" style="color:var(--text-mid)"><input type="checkbox" value="Ajustable" class="dark-check size-check" checked> Ajustable</label>
+                <label class="flex items-center gap-1.5 text-sm cursor-pointer" style="color:var(--text-mid)"><input type="checkbox" value="S" class="dark-check size-check"> S</label>
+                <label class="flex items-center gap-1.5 text-sm cursor-pointer" style="color:var(--text-mid)"><input type="checkbox" value="M" class="dark-check size-check"> M</label>
+                <label class="flex items-center gap-1.5 text-sm cursor-pointer" style="color:var(--text-mid)"><input type="checkbox" value="L" class="dark-check size-check"> L</label>
+                <label class="flex items-center gap-1.5 text-sm cursor-pointer" style="color:var(--text-mid)"><input type="checkbox" value="XL" class="dark-check size-check"> XL</label>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1.5" style="color:var(--text-mid)">Photo *</label>
+              <div class="upload-area rounded p-6 text-center cursor-pointer" onclick="document.getElementById('admin-file-input').click()">
+                <div id="upload-preview"><svg class="w-7 h-7 mx-auto mb-2" style="color:var(--gold)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><p class="text-sm condensed font-semibold tracking-wide" style="color:var(--text-mid)">Cliquez pour uploader</p><p class="text-xs mt-0.5" style="color:var(--text-lo)">PNG, JPG · Max 5MB</p></div>
+                <img id="admin-img-preview" src="" alt="" class="hidden w-full h-40 object-cover rounded">
+              </div>
+              <input type="file" id="admin-file-input" accept="image/*" class="hidden" onchange="handleAdminImageSelect(event)">
+              <div class="mt-3"><label class="block text-xs mb-1" style="color:var(--text-lo)">Ou URL d'image</label><input id="prod-img-url" class="dark-input text-sm py-2" placeholder="https://..." oninput="previewImageUrl()"></div>
+            </div>
+            <div class="flex gap-3 pt-2"><button onclick="saveProduct()" class="btn-gold flex-1 py-3 rounded text-sm">Sauvegarder</button><button onclick="resetProductForm()" class="btn-ghost px-4 py-3 rounded text-sm">Annuler</button></div>
+          </div>
+        </div>
+      </div>
+      <!-- ORDERS -->
+      <div id="admin-orders" class="p-6 hidden">
+        <div class="flex items-center justify-between mb-5"><p class="text-sm" style="color:var(--text-mid)"><span id="orders-count-label">0</span> commande(s)</p><button onclick="clearAllOrders()" class="text-xs condensed font-semibold tracking-wide uppercase hover:text-red-400 transition-colors" style="color:var(--text-lo)">Supprimer tout</button></div>
+        <div id="orders-list" class="space-y-4"></div>
+        <div id="orders-empty" class="text-center py-16" style="color:var(--text-lo)"><svg class="w-10 h-10 mx-auto mb-3" style="color:var(--dark-4)" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="2"/></svg><p class="condensed font-bold text-sm tracking-widest uppercase">Aucune commande</p></div>
+      </div>
+      <!-- SETTINGS -->
+      <div id="admin-settings" class="p-6 hidden">
+        <div class="max-w-xl space-y-5">
+          <div class="rounded p-5" style="background:var(--dark-2);border:1px solid var(--border)">
+            <p class="condensed font-bold text-sm tracking-wider uppercase mb-4" style="color:var(--cream)">Informations boutique</p>
+            <div class="space-y-3">
+              <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1" style="color:var(--text-mid)">Nom</label><input id="setting-shop-name" class="dark-input" value="Easy Cap 221"></div>
+              <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1" style="color:var(--text-mid)">WhatsApp</label><input id="setting-whatsapp" class="dark-input" placeholder="+221700000000"></div>
+              <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1" style="color:var(--text-mid)">Instagram</label><input id="setting-instagram" class="dark-input" placeholder="@easycap221"></div>
+              <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1" style="color:var(--text-mid)">Adresse</label><input id="setting-address" class="dark-input" placeholder="Plateau, Dakar"></div>
+            </div>
+            <button onclick="saveSettings()" class="btn-gold mt-4 px-6 py-2.5 rounded text-sm">Sauvegarder</button>
+          </div>
+          <div class="rounded p-5" style="background:var(--dark-2);border:1px solid var(--border)">
+            <p class="condensed font-bold text-sm tracking-wider uppercase mb-4" style="color:var(--cream)">Sécurité</p>
+            <div class="space-y-3">
+              <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1" style="color:var(--text-mid)">Nouveau mot de passe</label><input id="new-admin-pass" type="password" class="dark-input" placeholder="Nouveau mot de passe"></div>
+              <div><label class="block text-xs condensed font-semibold tracking-wider uppercase mb-1" style="color:var(--text-mid)">Confirmer</label><input id="confirm-admin-pass" type="password" class="dark-input" placeholder="Confirmer"></div>
+            </div>
+            <button onclick="changeAdminPass()" class="btn-outline mt-4 px-6 py-2.5 rounded text-sm">Changer</button>
+          </div>
+          <div class="rounded p-5" style="background:var(--dark-2);border:1px solid var(--border)">
+            <p class="condensed font-bold text-sm tracking-wider uppercase mb-2" style="color:var(--cream)">Données</p>
+            <p class="text-sm mb-4" style="color:var(--text-lo)">Exporter ou réinitialiser</p>
+            <div class="flex gap-3 flex-wrap">
+              <button onclick="exportData()" class="btn-outline px-4 py-2 rounded text-sm">Exporter JSON</button>
+              <button onclick="if(confirm('Supprimer tous les produits ?')){localStorage.removeItem('easycap_products');products=[];showToast('Produits supprimés');renderAdminProducts();renderProducts();}" class="px-4 py-2 rounded text-sm condensed font-semibold tracking-wide hover:bg-red-500/10 transition-colors" style="border:1px solid rgba(239,68,68,0.3);color:#f87171">Reset produits</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const LS={get:k=>{try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}},set:(k,v)=>localStorage.setItem(k,JSON.stringify(v)),remove:k=>localStorage.removeItem(k)};
+let products=LS.get('easycap_products')||[];
+let cart=LS.get('easycap_cart')||[];
+let orders=LS.get('easycap_orders')||[];
+let settings=LS.get('easycap_settings')||{shopName:'Easy Cap 221',whatsapp:'+221700000000',instagram:'@easycap221',address:'Plateau, Dakar'};
+let adminPass=LS.get('easycap_admin_pass')||'admin221';
+let currentFilter='all',currentProductModal=null,pmSelectedColor=null,pmSelectedSize=null,pmQty=1,editColorsList=[],checkoutStep=1;
+
+document.addEventListener('DOMContentLoaded',()=>{
+  if(products.length===0){products=getDemoProducts();LS.set('easycap_products',products);}
+  renderProducts();updateCartUI();updateHeroStat();applySettings();
+  window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);});
+  document.querySelectorAll('input[name="delivery"]').forEach(r=>{r.addEventListener('change',()=>{document.getElementById('address-field').style.display=r.value==='pickup'?'none':'block';});});
+});
+
+function getDemoProducts(){return[
+  {id:genId(),name:'Mbalax Cobra',category:'snapback',price:8500,stock:12,description:'Snapback premium inspiré de la culture Mbalax. Structure rigide, style audacieux.',colors:[{hex:'#1a1a1a',name:'Noir'},{hex:'#C9A84C',name:'Gold 221'},{hex:'#8B0000',name:'Bordeaux'}],sizes:['Ajustable'],image:'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&q=80'},
+  {id:genId(),name:'Teranga Dad Hat',category:'dad-hat',price:6500,stock:8,description:'Dad hat décontracté, parfait pour tous les jours.',colors:[{hex:'#f5f0e8',name:'Crème'},{hex:'#4a3728',name:'Espresso'},{hex:'#1e2d40',name:'Navy'},{hex:'#C9A84C',name:'Gold'}],sizes:['Ajustable'],image:'https://images.unsplash.com/photo-1534215754734-18e55d13e346?w=600&q=80'},
+  {id:genId(),name:'Dakar Fitted Pro',category:'fitted',price:12000,stock:5,description:'Fitted cap structuré, profil haut emblématique.',colors:[{hex:'#080808',name:'All Black'},{hex:'#ffffff',name:'Blanc'},{hex:'#C9A84C',name:'Or'}],sizes:['S/M','L/XL'],image:'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=600&q=80'},
+  {id:genId(),name:'Yoff Bucket Hat',category:'bucket',price:7500,stock:15,description:'Bucket hat tendance, protection optimale et style retro-moderne.',colors:[{hex:'#2d4a2d',name:'Kaki'},{hex:'#C9A84C',name:'Sable'},{hex:'#1a1a2e',name:'Nuit'}],sizes:['S/M','L/XL'],image:'https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&q=80'},
+];}
+
+function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+
+function renderProducts(filter){
+  if(filter!==undefined)currentFilter=filter;
+  const grid=document.getElementById('products-grid'),empty=document.getElementById('products-empty');
+  let filtered=currentFilter==='all'?products:products.filter(p=>p.category===currentFilter);
+  if(filtered.length===0){grid.innerHTML='';empty.classList.remove('hidden');return;}
+  empty.classList.add('hidden');grid.innerHTML=filtered.map(cardHTML).join('');updateHeroStat();
+}
+
+function cardHTML(p){
+  const sb=p.stock===0?'<span class="badge-stock badge-out">Épuisé</span>':p.stock<=3?'<span class="badge-stock badge-low">Stock limité</span>':'';
+  const cd=(p.colors||[]).slice(0,4).map(c=>`<div class="color-dot" style="background:${c.hex}" title="${c.name}"></div>`).join('');
+  return `<div class="cap-card rounded overflow-hidden cursor-pointer" onclick="openProductModal('${p.id}')"><div class="card-img relative" style="aspect-ratio:1;background:var(--dark-3)"><img src="${p.image||'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&q=80'}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&q=80'">${sb?`<div class="absolute top-3 left-3">${sb}</div>`:''}<div class="absolute bottom-0 right-0 w-6 h-6" style="background:linear-gradient(135deg,transparent 50%,var(--gold) 50%);opacity:0.5"></div></div><div class="p-4" style="position:relative;z-index:1"><p class="section-label mb-1" style="font-size:10px">${formatCat(p.category)}</p><h3 class="condensed font-bold text-lg leading-tight mb-3" style="color:var(--cream)">${p.name}</h3><div class="flex items-center justify-between"><div><p class="display text-2xl leading-none" style="color:var(--gold)">${formatPrice(p.price)}</p><div class="flex gap-1 mt-2">${cd}</div></div><button onclick="event.stopPropagation();quickAdd('${p.id}')" class="w-9 h-9 rounded flex items-center justify-center flex-shrink-0 transition-all hover:scale-105 ${p.stock===0?'opacity-30 cursor-not-allowed':''}" style="background:var(--gold);border:none"><svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button></div></div></div>`;
+}
+
+function formatPrice(n){return Number(n).toLocaleString('fr-FR')+' FCFA';}
+function formatCat(c){const m={'snapback':'Snapback','dad-hat':'Dad Hat','fitted':'Fitted Cap','bucket':'Bucket Hat','trucker':'Trucker Cap'};return m[c]||c;}
+function filterProducts(f,btn){currentFilter=f;document.querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderProducts();}
+function updateHeroStat(){document.getElementById('hero-stat-products').textContent=products.length+'+';}
+
+function openProductModal(id){
+  const p=products.find(x=>x.id===id);if(!p)return;
+  currentProductModal=p;pmSelectedColor=p.colors&&p.colors[0]?p.colors[0]:null;pmSelectedSize=p.sizes&&p.sizes[0]?p.sizes[0]:null;pmQty=1;
+  document.getElementById('pm-img').src=p.image||'';document.getElementById('pm-img').alt=p.name;
+  document.getElementById('pm-model').textContent=formatCat(p.category);
+  document.getElementById('pm-name').textContent=p.name;
+  document.getElementById('pm-price').textContent=formatPrice(p.price);
+  document.getElementById('pm-desc').textContent=p.description||'';
+  document.getElementById('pm-qty').textContent=1;
+  document.getElementById('pm-badge').classList.toggle('hidden',!(p.stock<=3&&p.stock>0));
+  const cw=document.getElementById('pm-colors-wrap'),ce=document.getElementById('pm-colors');
+  if(p.colors&&p.colors.length>0){cw.style.display='';ce.innerHTML=p.colors.map((c,i)=>`<div class="color-dot${i===0?' selected':''}" style="background:${c.hex}" title="${c.name}" onclick="selectModalColor(this,'${c.hex}','${c.name}')"></div>`).join('');document.getElementById('pm-selected-color').textContent=p.colors[0].name;}else cw.style.display='none';
+  const sw=document.getElementById('pm-sizes-wrap'),se=document.getElementById('pm-sizes');
+  if(p.sizes&&p.sizes.length>0){sw.style.display='';se.innerHTML=p.sizes.map((s,i)=>`<button class="size-btn${i===0?' selected':''}" onclick="selectModalSize(this,'${s}')">${s}</button>`).join('');}else sw.style.display='none';
+  const btn=document.getElementById('pm-add-btn');
+  if(p.stock===0){btn.textContent='Épuisé';btn.disabled=true;btn.style.opacity='0.4';btn.style.cursor='not-allowed';}else{btn.textContent='Ajouter au panier';btn.disabled=false;btn.style.opacity='';btn.style.cursor='';}
+  document.getElementById('product-modal').classList.remove('hidden');document.body.style.overflow='hidden';
+}
+function closeProductModal(){document.getElementById('product-modal').classList.add('hidden');document.body.style.overflow='';currentProductModal=null;}
+function selectModalColor(el,hex,name){document.querySelectorAll('#pm-colors .color-dot').forEach(d=>d.classList.remove('selected'));el.classList.add('selected');pmSelectedColor={hex,name};document.getElementById('pm-selected-color').textContent=name;}
+function selectModalSize(el,size){document.querySelectorAll('#pm-sizes .size-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');pmSelectedSize=size;}
+function pmQtyChange(d){pmQty=Math.max(1,pmQty+d);document.getElementById('pm-qty').textContent=pmQty;}
+function addFromModal(){if(!currentProductModal)return;addToCart(currentProductModal,pmSelectedColor,pmSelectedSize,pmQty);closeProductModal();}
+function quickAdd(id){const p=products.find(x=>x.id===id);if(!p||p.stock===0)return;addToCart(p,p.colors&&p.colors[0]?p.colors[0]:null,p.sizes&&p.sizes[0]?p.sizes[0]:null,1);}
+
+function addToCart(product,color,size,qty=1){
+  const key=`${product.id}_${color?.hex||''}_${size||''}`;
+  const ex=cart.find(i=>i.key===key);
+  if(ex)ex.qty+=qty;else cart.push({key,id:product.id,name:product.name,price:product.price,image:product.image,color,size,qty});
+  LS.set('easycap_cart',cart);updateCartUI();showToast(`✦ ${product.name} ajouté`);
+}
+function updateCartUI(){
+  const total=cart.reduce((a,i)=>a+i.qty,0),subtotal=cart.reduce((a,i)=>a+(i.price*i.qty),0);
+  ['cart-count','cart-count-mobile'].forEach(id=>{const el=document.getElementById(id);if(!el)return;if(total>0){el.textContent=total;el.classList.remove('hidden');}else el.classList.add('hidden');});
+  document.getElementById('cart-subtotal').textContent=formatPrice(subtotal);
+  const ie=document.getElementById('cart-items'),ee=document.getElementById('cart-empty'),fe=document.getElementById('cart-footer');
+  if(cart.length===0){ie.innerHTML='';ee.style.display='flex';fe.classList.add('hidden');return;}
+  ee.style.display='none';fe.classList.remove('hidden');
+  ie.innerHTML=cart.map(item=>`<div class="flex gap-3 items-start py-3 border-b" style="border-color:var(--border)"><img src="${item.image||''}" alt="${item.name}" class="w-14 h-14 object-cover rounded flex-shrink-0" style="background:var(--dark-3)"><div class="flex-1 min-w-0"><p class="condensed font-bold text-sm leading-tight" style="color:var(--cream)">${item.name}</p><p class="text-xs mt-0.5" style="color:var(--text-lo)">${item.color?item.color.name:''} ${item.size?'· '+item.size:''}</p><p class="condensed font-bold text-sm mt-1" style="color:var(--gold)">${formatPrice(item.price*item.qty)}</p></div><div class="flex flex-col items-end gap-2"><button onclick="removeFromCart('${item.key}')" class="transition-colors hover:text-red-400" style="color:var(--text-lo)"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button><div class="flex items-center gap-1 rounded px-1" style="border:1px solid var(--border);background:var(--dark-3)"><button class="qty-btn" style="width:24px;height:24px;border:none;background:transparent" onclick="cartQtyChange('${item.key}',-1)">−</button><span class="condensed font-bold text-xs w-5 text-center" style="color:var(--cream)">${item.qty}</span><button class="qty-btn" style="width:24px;height:24px;border:none;background:transparent" onclick="cartQtyChange('${item.key}',1)">+</button></div></div></div>`).join('');
+}
+function removeFromCart(key){cart=cart.filter(i=>i.key!==key);LS.set('easycap_cart',cart);updateCartUI();}
+function cartQtyChange(key,d){const item=cart.find(i=>i.key===key);if(!item)return;item.qty=Math.max(0,item.qty+d);if(item.qty===0){removeFromCart(key);return;}LS.set('easycap_cart',cart);updateCartUI();}
+function clearCart(){cart=[];LS.set('easycap_cart',cart);updateCartUI();}
+function openCart(){document.getElementById('cart-sidebar').classList.add('open');document.getElementById('cart-overlay').classList.remove('hidden');document.body.style.overflow='hidden';}
+function closeCart(){document.getElementById('cart-sidebar').classList.remove('open');document.getElementById('cart-overlay').classList.add('hidden');document.body.style.overflow='';}
+
+function openCheckout(){closeCart();checkoutStep=1;renderCheckoutStep(1);document.getElementById('checkout-modal').classList.remove('hidden');document.body.style.overflow='hidden';}
+function closeCheckout(){document.getElementById('checkout-modal').classList.add('hidden');document.body.style.overflow='';}
+function renderCheckoutStep(n){
+  [1,2,3].forEach(i=>{document.getElementById(`checkout-step${i}`).classList.toggle('hidden',i!==n);const dot=document.getElementById(`step${i}-dot`);dot.className='step-dot';if(i<n)dot.classList.add('done');else if(i===n)dot.classList.add('active');});
+  if(n>1)document.getElementById('step1-line').classList.add('done');else document.getElementById('step1-line').classList.remove('done');
+  if(n>2)document.getElementById('step2-line').classList.add('done');else document.getElementById('step2-line').classList.remove('done');
+}
+function checkoutNext(n){
+  if(n===2){const f=document.getElementById('co-fname').value.trim(),p=document.getElementById('co-phone').value.trim();if(!f||!p){showToast('⚠ Prénom et téléphone requis');return;}}
+  if(n===3){const del=document.querySelector('input[name="delivery"]:checked')?.value;if(del!=='pickup'){const a=document.getElementById('co-address').value.trim();if(!a){showToast('⚠ Adresse requise');return;}}const order=buildOrder();orders.unshift(order);LS.set('easycap_orders',orders);renderOrderSummary(order);}
+  checkoutStep=n;renderCheckoutStep(n);
+}
+function checkoutBack(n){checkoutStep=n;renderCheckoutStep(n);}
+function buildOrder(){
+  const delivery=document.querySelector('input[name="delivery"]:checked')?.value||'dakar';
+  const payment=document.querySelector('input[name="payment"]:checked')?.value||'om';
+  const deliveryCost=delivery==='dakar'?1500:delivery==='banlieue'?3000:0;
+  const subtotal=cart.reduce((a,i)=>a+(i.price*i.qty),0);
+  return{id:'CMD-'+Date.now().toString(36).toUpperCase(),date:new Date().toLocaleDateString('fr-FR'),customer:{fname:document.getElementById('co-fname').value,lname:document.getElementById('co-lname').value,phone:document.getElementById('co-phone').value,email:document.getElementById('co-email').value,address:document.getElementById('co-address').value},delivery,deliveryCost,payment,items:[...cart],subtotal,total:subtotal+deliveryCost,status:'En attente'};
+}
+function renderOrderSummary(order){
+  document.getElementById('order-summary-final').innerHTML=`<p class="condensed font-bold text-sm mb-3" style="color:var(--gold)">◆ Commande #${order.id}</p><div class="space-y-1 text-sm" style="color:var(--text-mid)">${order.items.map(i=>`<div class="flex justify-between"><span>${i.qty}× ${i.name}</span><span class="condensed font-semibold" style="color:var(--cream)">${formatPrice(i.price*i.qty)}</span></div>`).join('')}<div class="border-t pt-2 mt-2 flex justify-between" style="border-color:var(--border)"><span>Livraison</span><span>${order.deliveryCost===0?'Gratuit':formatPrice(order.deliveryCost)}</span></div><div class="flex justify-between condensed font-bold text-base" style="color:var(--gold)"><span>Total</span><span>${formatPrice(order.total)}</span></div></div>`;
+}
+function sendWhatsApp(){
+  const order=orders[0];if(!order)return;
+  const items=order.items.map(i=>`• ${i.qty}x ${i.name} (${i.color?.name||''}) - ${formatPrice(i.price*i.qty)}`).join('\n');
+  const msg=`🧢 *Easy Cap 221 — Commande*\n\n*#${order.id}*\n\nClient: ${order.customer.fname} ${order.customer.lname}\nTél: ${order.customer.phone}\nAdresse: ${order.customer.address}\n\n${items}\n\nLivraison: ${formatPrice(order.deliveryCost)}\n*TOTAL: ${formatPrice(order.total)}*\n\nPaiement: ${order.payment.toUpperCase()}`;
+  window.open(`https://wa.me/${(settings.whatsapp||'+221700000000').replace(/[^0-9]/g,'')}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+function sendContactWhatsApp(){
+  const msg=document.getElementById('contact-msg').value;if(!msg.trim()){showToast('⚠ Message requis');return;}
+  const text=`Bonjour Easy Cap 221 ✦\n\nNom: ${document.getElementById('contact-name').value||'Anonyme'}\nTél: ${document.getElementById('contact-phone').value||'—'}\n\nMessage: ${msg}`;
+  window.open(`https://wa.me/${(settings.whatsapp||'+221700000000').replace(/[^0-9]/g,'')}?text=${encodeURIComponent(text)}`,'_blank');
+}
+function toggleMobileMenu(){document.getElementById('mobile-menu').classList.toggle('hidden');}
+function showToast(msg){const el=document.createElement('div');el.className='toast condensed font-semibold tracking-wide text-sm px-5 py-3 rounded shadow-2xl';el.textContent=msg;document.getElementById('toast-container').appendChild(el);setTimeout(()=>el.remove(),2900);}
+function goAdmin(){document.getElementById('admin-panel').classList.remove('hidden');document.getElementById('admin-login-overlay').style.display='flex';document.getElementById('admin-layout').classList.add('hidden');document.getElementById('admin-pass-input').value='';document.getElementById('admin-pass-error').classList.add('hidden');}
+function closeAdmin(){document.getElementById('admin-panel').classList.add('hidden');}
+function checkAdminPass(){const v=document.getElementById('admin-pass-input').value;if(v===adminPass){document.getElementById('admin-login-overlay').style.display='none';document.getElementById('admin-layout').classList.remove('hidden');adminNav('dashboard');loadSettings();}else{document.getElementById('admin-pass-error').classList.remove('hidden');document.getElementById('admin-pass-input').value='';}}
+function adminNav(page){
+  ['dashboard','products','add-product','orders','settings'].forEach(p=>{const el=document.getElementById('admin-'+p.replace('-',''));if(p==='add-product'){document.getElementById('admin-add-product').classList.toggle('hidden',p!==page);}else if(el)el.classList.toggle('hidden',p!==page);});
+  document.getElementById('admin-add-product').classList.toggle('hidden',page!=='add-product');
+  document.querySelectorAll('.admin-sidebar-link').forEach(b=>b.classList.remove('active'));
+  const ab=document.getElementById('nav-'+page);if(ab)ab.classList.add('active');
+  const titles={dashboard:'Dashboard',products:'Produits','add-product':'Ajouter un produit',orders:'Commandes',settings:'Paramètres'};
+  document.getElementById('admin-page-title').textContent=titles[page]||page;
+  if(page==='dashboard')renderAdminDashboard();
+  if(page==='products')renderAdminProducts();
+  if(page==='add-product'&&!document.getElementById('edit-banner').classList.contains('hidden')){}else if(page==='add-product')resetProductForm();
+  if(page==='orders')renderAdminOrders();
+}
+function renderAdminDashboard(){
+  document.getElementById('stat-products').textContent=products.length;
+  document.getElementById('stat-orders').textContent=orders.length;
+  document.getElementById('stat-revenue').textContent=formatPrice(orders.reduce((a,o)=>a+o.total,0));
+  document.getElementById('stat-instock').textContent=products.filter(p=>p.stock>0).length;
+  const rl=document.getElementById('recent-orders-list');
+  rl.innerHTML=orders.length===0?`<p class="p-5 text-sm" style="color:var(--text-lo)">Aucune commande</p>`:orders.slice(0,5).map(o=>`<div class="px-5 py-3 flex items-center justify-between text-sm border-b" style="border-color:var(--border)"><div><p class="condensed font-bold" style="color:var(--cream)">${o.id}</p><p class="text-xs mt-0.5" style="color:var(--text-lo)">${o.customer.fname} ${o.customer.lname} · ${o.date}</p></div><div class="text-right"><p class="condensed font-bold" style="color:var(--gold)">${formatPrice(o.total)}</p><span class="badge-stock badge-low text-xs">${o.status}</span></div></div>`).join('');
+  document.getElementById('dashboard-products').innerHTML=products.slice(0,5).map(p=>`<div class="px-5 py-3 flex items-center gap-3 text-sm border-b" style="border-color:var(--border)"><img src="${p.image||''}" class="w-9 h-9 rounded object-cover" style="background:var(--dark-3)"><div class="flex-1"><p class="condensed font-bold" style="color:var(--cream)">${p.name}</p><p class="text-xs" style="color:var(--text-lo)">${formatCat(p.category)}</p></div><div class="text-right"><p class="condensed font-bold" style="color:var(--gold)">${formatPrice(p.price)}</p><p class="text-xs" style="color:var(--text-lo)">Stock: ${p.stock}</p></div></div>`).join('');
+}
+function renderAdminProducts(s){
+  const list=s?products.filter(p=>p.name.toLowerCase().includes(s.toLowerCase())):products;
+  document.getElementById('products-count').textContent=list.length;
+  const tb=document.getElementById('admin-products-tbody');
+  if(list.length===0){tb.innerHTML='<tr><td colspan="5" class="text-center py-8" style="color:var(--text-lo)">Aucun produit</td></tr>';return;}
+  tb.innerHTML=list.map(p=>`<tr><td><div class="flex items-center gap-3"><img src="${p.image||''}" class="w-9 h-9 rounded object-cover" style="background:var(--dark-3)"><p class="condensed font-bold" style="color:var(--cream)">${p.name}</p></div></td><td style="color:var(--text-lo)">${formatCat(p.category)}</td><td class="condensed font-bold" style="color:var(--gold)">${formatPrice(p.price)}</td><td><span class="badge-stock ${p.stock===0?'badge-out':p.stock<=3?'badge-low':'badge-in'}">${p.stock===0?'Épuisé':p.stock+' unités'}</span></td><td><div class="flex gap-2"><button onclick="editProduct('${p.id}')" class="btn-ghost text-xs px-3 py-1.5 rounded">Modifier</button><button onclick="deleteProduct('${p.id}')" class="text-xs px-3 py-1.5 rounded hover:bg-red-500/10 transition-colors" style="border:1px solid rgba(239,68,68,0.3);color:#f87171">Suppr.</button></div></td></tr>`).join('');
+}
+function adminSearchProducts(){renderAdminProducts(document.getElementById('admin-search').value);}
+function deleteProduct(id){if(!confirm('Supprimer ce produit ?'))return;products=products.filter(p=>p.id!==id);LS.set('easycap_products',products);renderAdminProducts();renderProducts();showToast('🗑 Produit supprimé');}
+function editProduct(id){
+  const p=products.find(x=>x.id===id);if(!p)return;
+  document.getElementById('prod-edit-id').value=id;document.getElementById('prod-name').value=p.name;document.getElementById('prod-category').value=p.category;document.getElementById('prod-price').value=p.price;document.getElementById('prod-stock').value=p.stock;document.getElementById('prod-desc').value=p.description||'';document.getElementById('prod-img-url').value=p.image||'';
+  if(p.image){document.getElementById('admin-img-preview').src=p.image;document.getElementById('admin-img-preview').classList.remove('hidden');document.getElementById('upload-preview').classList.add('hidden');}
+  editColorsList=[...(p.colors||[])];renderEditColors();
+  document.querySelectorAll('.size-check').forEach(cb=>{cb.checked=(p.sizes||[]).includes(cb.value);});
+  document.getElementById('edit-banner').classList.remove('hidden');adminNav('add-product');
+}
+function addColorOption(){const hex=document.getElementById('new-color-hex').value,name=document.getElementById('new-color-name').value.trim();if(!name){showToast('⚠ Nommez la couleur');return;}editColorsList.push({hex,name});document.getElementById('new-color-name').value='';renderEditColors();}
+function renderEditColors(){document.getElementById('colors-list').innerHTML=editColorsList.map((c,i)=>`<div class="flex items-center gap-2 rounded px-3 py-2 text-sm" style="background:var(--dark-3);border:1px solid var(--border)"><div class="w-5 h-5 rounded-full border" style="background:${c.hex};border-color:var(--border)"></div><span class="flex-1 condensed font-semibold" style="color:var(--cream)">${c.name}</span><span class="text-xs" style="color:var(--text-lo)">${c.hex}</span><button onclick="editColorsList.splice(${i},1);renderEditColors()" style="color:var(--text-lo)" class="hover:text-red-400 transition-colors"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button></div>`).join('')||`<p class="text-xs" style="color:var(--text-lo)">Aucune couleur</p>`;}
+function saveProduct(){
+  const name=document.getElementById('prod-name').value.trim(),price=parseFloat(document.getElementById('prod-price').value);
+  if(!name||!price){showToast('⚠ Nom et prix requis');return;}
+  const id=document.getElementById('prod-edit-id').value,sizes=[...document.querySelectorAll('.size-check:checked')].map(c=>c.value);
+  const imgUrl=document.getElementById('prod-img-url').value.trim()||document.getElementById('admin-img-preview').src||'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&q=80';
+  const pd={name,category:document.getElementById('prod-category').value,price,stock:parseInt(document.getElementById('prod-stock').value)||0,description:document.getElementById('prod-desc').value.trim(),colors:editColorsList,sizes:sizes.length?sizes:['Ajustable'],image:imgUrl};
+  if(id){const idx=products.findIndex(p=>p.id===id);if(idx!==-1)products[idx]={...products[idx],...pd};}else products.push({id:genId(),...pd});
+  LS.set('easycap_products',products);renderProducts();showToast('✦ Produit sauvegardé');resetProductForm();adminNav('products');
+}
+function resetProductForm(){
+  ['prod-edit-id','prod-name','prod-price','prod-stock','prod-desc','prod-img-url'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('admin-img-preview').src='';document.getElementById('admin-img-preview').classList.add('hidden');document.getElementById('upload-preview').classList.remove('hidden');
+  document.getElementById('edit-banner').classList.add('hidden');editColorsList=[];renderEditColors();
+  document.querySelectorAll('.size-check').forEach(cb=>{cb.checked=cb.value==='Ajustable';});
+}
+function handleAdminImageSelect(e){const file=e.target.files[0];if(!file)return;if(file.size>5*1024*1024){showToast('⚠ Image trop grande');return;}const r=new FileReader();r.onload=ev=>{document.getElementById('admin-img-preview').src=ev.target.result;document.getElementById('admin-img-preview').classList.remove('hidden');document.getElementById('upload-preview').classList.add('hidden');document.getElementById('prod-img-url').value=ev.target.result;};r.readAsDataURL(file);}
+function previewImageUrl(){const u=document.getElementById('prod-img-url').value;if(u&&u.startsWith('http')){document.getElementById('admin-img-preview').src=u;document.getElementById('admin-img-preview').classList.remove('hidden');document.getElementById('upload-preview').classList.add('hidden');}}
+function renderAdminOrders(){
+  document.getElementById('orders-count-label').textContent=orders.length;
+  const list=document.getElementById('orders-list'),empty=document.getElementById('orders-empty');
+  if(orders.length===0){list.innerHTML='';empty.classList.remove('hidden');return;}
+  empty.classList.add('hidden');
+  list.innerHTML=orders.map(o=>`<div class="rounded overflow-hidden" style="background:var(--dark-2);border:1px solid var(--border)"><div class="px-5 py-4 border-b flex items-center justify-between" style="border-color:var(--border)"><div><p class="condensed font-bold text-sm" style="color:var(--cream)">${o.id}</p><p class="text-xs mt-0.5" style="color:var(--text-lo)">${o.date}</p></div><div class="flex items-center gap-3"><span class="condensed font-bold" style="color:var(--gold)">${formatPrice(o.total)}</span><select onchange="updateOrderStatus('${o.id}',this.value)" class="dark-input text-xs py-1 px-2" style="width:140px"><option value="En attente" ${o.status==='En attente'?'selected':''}>⏳ En attente</option><option value="Confirmée" ${o.status==='Confirmée'?'selected':''}>✅ Confirmée</option><option value="En livraison" ${o.status==='En livraison'?'selected':''}>🚚 En livraison</option><option value="Livrée" ${o.status==='Livrée'?'selected':''}>📦 Livrée</option><option value="Annulée" ${o.status==='Annulée'?'selected':''}>❌ Annulée</option></select></div></div><div class="px-5 py-3 grid grid-cols-2 gap-2 text-xs border-b" style="border-color:var(--border);color:var(--text-mid)"><div><span style="color:var(--text-lo)">Client:</span> ${o.customer.fname} ${o.customer.lname}</div><div><span style="color:var(--text-lo)">Tél:</span> ${o.customer.phone}</div><div><span style="color:var(--text-lo)">Livraison:</span> ${o.delivery}</div><div><span style="color:var(--text-lo)">Paiement:</span> ${o.payment}</div>${o.customer.address?`<div class="col-span-2"><span style="color:var(--text-lo)">Adresse:</span> ${o.customer.address}</div>`:''}</div><div class="px-5 py-3">${o.items.map(i=>`<div class="flex items-center gap-2 py-1 text-xs" style="color:var(--text-mid)"><img src="${i.image||''}" class="w-7 h-7 rounded object-cover" style="background:var(--dark-3)"><span class="flex-1">${i.qty}× ${i.name} ${i.color?'('+i.color.name+')':''}</span><span class="condensed font-semibold" style="color:var(--gold)">${formatPrice(i.price*i.qty)}</span></div>`).join('')}</div><div class="px-5 pb-3 flex justify-end"><button onclick="deleteOrder('${o.id}')" class="text-xs condensed font-semibold uppercase tracking-wide hover:text-red-400 transition-colors" style="color:var(--text-lo)">Supprimer</button></div></div>`).join('');
+}
+function updateOrderStatus(id,status){const o=orders.find(x=>x.id===id);if(o){o.status=status;LS.set('easycap_orders',orders);showToast('Statut mis à jour');}}
+function deleteOrder(id){if(!confirm('Supprimer ?'))return;orders=orders.filter(o=>o.id!==id);LS.set('easycap_orders',orders);renderAdminOrders();showToast('🗑 Supprimée');}
+function clearAllOrders(){if(!confirm('Supprimer toutes les commandes ?'))return;orders=[];LS.set('easycap_orders',orders);renderAdminOrders();}
+function loadSettings(){const s=settings;['shop-name','whatsapp','instagram','address'].forEach(k=>{const el=document.getElementById('setting-'+k);if(el)el.value=s[k.replace('-','')]||'';});}
+function saveSettings(){settings={shopName:document.getElementById('setting-shop-name').value,whatsapp:document.getElementById('setting-whatsapp').value,instagram:document.getElementById('setting-instagram').value,address:document.getElementById('setting-address').value};LS.set('easycap_settings',settings);applySettings();showToast('✦ Paramètres sauvegardés');}
+function applySettings(){const wa=(settings.whatsapp||'+221700000000').replace(/[^0-9]/g,'');document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{if(!a.href.includes('text='))a.href=`https://wa.me/${wa}`;});}
+function changeAdminPass(){const np=document.getElementById('new-admin-pass').value,cp=document.getElementById('confirm-admin-pass').value;if(!np){showToast('⚠ Entrez un mot de passe');return;}if(np!==cp){showToast('⚠ Mots de passe différents');return;}adminPass=np;LS.set('easycap_admin_pass',adminPass);document.getElementById('new-admin-pass').value='';document.getElementById('confirm-admin-pass').value='';showToast('✦ Mot de passe changé');}
+function exportData(){const blob=new Blob([JSON.stringify({products,orders,settings,exported:new Date().toISOString()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='easycap221-data.json';a.click();showToast('📁 Export réussi');}
+</script>
+</body>
+</html>
